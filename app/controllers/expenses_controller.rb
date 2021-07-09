@@ -1,9 +1,11 @@
 class ExpensesController < ApplicationController
   before_action :set_expense, only: %i[show edit update destroy]
-
+  include CurrentUserConcern
   # GET /expenses or /expenses.json
   def index
     @expenses = Expense.all
+
+    render json: @expenses
   end
 
   # GET /expenses/1 or /expenses/1.json
@@ -14,12 +16,25 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
   end
 
+  def showuser
+    if @current_user
+      render json: {
+        user: @current_user.id
+      }
+    end
+  end
+
   # GET /expenses/1/edit
   def edit; end
 
   # POST /expenses or /expenses.json
   def create
-    @expense = Expense.new(expense_params)
+    # @expense = Expense.new(expense_params)
+    @expense = Expense.new
+    @expense.user_id = @current_user.id if @current_user
+    @expense.title = expense_params[:title]
+    @expense.amount = expense_params[:amount]
+    @expense.date = expense_params[:date]
 
     respond_to do |format|
       if @expense.save
@@ -63,6 +78,6 @@ class ExpensesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def expense_params
-    params.require(:expense).permit(:title, :amount, :date)
+    params.require(:expense).permit(:title, :amount, :date, :user_id)
   end
 end
