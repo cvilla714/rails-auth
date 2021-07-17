@@ -49,8 +49,13 @@ class ExpensesController < ApplicationController
 
   # PATCH/PUT /expenses/1 or /expenses/1.json
   def update
+    @expense.user_id = @current_user.id if @current_user
+    @expense.title = expense_params[:title]
+    @expense.amount = expense_params[:amount]
+    @expense.date = expense_params[:date]
     respond_to do |format|
-      if @expense.update(expense_params)
+      if @expense.save
+        # if @expense.update(expense_params)
         # format.html { redirect_to @expense, notice: "Expense was successfully updated." }
         format.json { render :show, status: :ok, location: @expense }
       else
@@ -78,6 +83,6 @@ class ExpensesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def expense_params
-    params.require(:expense).permit(:title, :amount, :date, :user_id)
+    params.require(:expense).permit(:title, :amount, :date, :user_id, :created_at, :updated_at)
   end
 end
