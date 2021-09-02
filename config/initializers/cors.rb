@@ -17,7 +17,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   
   
   allow do
-    origins 'https://vibrant-heyrovsky-039c58.netlify.app/'
+    origins 'https://lavista-authentication-api.herokuapp.com/'
 
     resource '*',
              headers: :any,
