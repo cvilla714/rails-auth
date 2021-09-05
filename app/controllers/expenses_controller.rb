@@ -1,6 +1,5 @@
 class ExpensesController < ApplicationController
   before_action :set_expense, only: %i[show edit update destroy]
-  # include CurrentUserConcern
   # GET /expenses or /expenses.json
   def index
     @expenses = Expense.all
