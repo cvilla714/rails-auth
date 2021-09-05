@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :set_expense, only: %i[show edit update destroy]
-  include CurrentUserConcern
+  # include CurrentUserConcern
   # GET /expenses or /expenses.json
   def index
     @expenses = Expense.all
@@ -17,9 +17,9 @@ class ExpensesController < ApplicationController
   end
 
   def showuser
-    if @current_user
+    if Current.user
       render json: {
-        user: @current_user.id
+        user: Current.user.id
       }
     end
   end
@@ -31,7 +31,7 @@ class ExpensesController < ApplicationController
   def create
     # @expense = Expense.new(expense_params)
     @expense = Expense.new
-    @expense.user_id = @current_user.id if @current_user
+    @expense.user_id = Current.user.id if Current.user
     @expense.title = expense_params[:title]
     @expense.amount = expense_params[:amount]
     @expense.date = expense_params[:date]
@@ -49,7 +49,7 @@ class ExpensesController < ApplicationController
 
   # PATCH/PUT /expenses/1 or /expenses/1.json
   def update
-    @expense.user_id = @current_user.id if @current_user
+    @expense.user_id = Current.user.id if Current.user
     @expense.title = expense_params[:title]
     @expense.amount = expense_params[:amount]
     @expense.date = expense_params[:date]
