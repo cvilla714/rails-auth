@@ -16,11 +16,11 @@ class ExpensesController < ApplicationController
   end
 
   def showuser
-    if Current.user
-      render json: {
-        user: Current.user.id
-      }
-    end
+    return unless Current.user
+
+    render json: {
+      user: Current.user.id
+    }
   end
 
   # GET /expenses/1/edit
