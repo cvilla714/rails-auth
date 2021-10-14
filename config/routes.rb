@@ -5,6 +5,5 @@ Rails.application.routes.draw do
   delete :logout, to: 'sessions#logout'
   get :logged_in, to: 'sessions#logged_in'
   get :showuser, to: 'expenses#showuser'
-  root to: 'static#home'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
