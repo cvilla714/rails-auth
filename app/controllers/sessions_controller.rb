@@ -17,7 +17,6 @@ class SessionsController < ApplicationController
   end
 
   def logged_in
-    # if Current.user
     if @current_user
       render json: {
         logged_in: true,
@@ -26,13 +25,12 @@ class SessionsController < ApplicationController
     else
       render json: {
         logged_in: false
-        # user: nil
+
       }
     end
   end
 
   def logout
-    # session[:user_id] = nil
     reset_session
     render json: { status: 200, logged_out: true }
   end
